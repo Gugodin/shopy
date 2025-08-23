@@ -1,4 +1,4 @@
-package com.example.replacenamehere
+package com.javiergtzesp.shopy
 
 import io.flutter.embedding.android.FlutterActivity
 

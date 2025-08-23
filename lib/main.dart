@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:replacenamehere/app/app.dart';
+import 'package:shopy/app/app.dart';
 
 import 'config/config.dart';
 

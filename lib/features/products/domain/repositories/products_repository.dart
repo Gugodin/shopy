@@ -1,4 +1,4 @@
-import 'package:replacenamehere/core/core.dart';
+import 'package:shopy/core/core.dart';
 
 import '../entities/entities.dart';
 

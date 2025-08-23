@@ -8,10 +8,8 @@
       "name": "Dev Android",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_dev.dart",
+      "program": "lib/main.dart",
       "args": [
-        "--flavor",
-        "dev",
         "--dart-define",
         "BASE_URL=https://fakestoreapi.com"
       ]

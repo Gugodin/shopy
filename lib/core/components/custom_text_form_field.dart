@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:replacenamehere/core/const/regex/regex.dart';
+import 'package:shopy/core/const/regex/regex.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String? title;

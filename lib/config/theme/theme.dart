@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:replacenamehere/config/styles/styles.dart';
+import 'package:shopy/config/styles/styles.dart';
 
 final ThemeData appTheme = ThemeData(
   colorScheme: ColorScheme(
@@ -59,6 +59,7 @@ final ThemeData appTheme = ThemeData(
   textTheme: TextTheme(
     bodyLarge: TextStyle(color: AppColors.onBackground),
     bodyMedium: TextStyle(color: AppColors.onBackground),
-    titleLarge: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+    titleLarge:
+        TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold),
   ),
 );

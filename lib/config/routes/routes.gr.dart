@@ -11,11 +11,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:flutter/material.dart' as _i5;
-import 'package:replacenamehere/features/products/presentation/screens/product_detail_screen/product_detail_screen.dart'
+import 'package:shopy/features/products/presentation/screens/product_detail_screen/product_detail_screen.dart'
     as _i1;
-import 'package:replacenamehere/features/products/presentation/screens/products_list_screen/products_list_screen.dart'
+import 'package:shopy/features/products/presentation/screens/products_list_screen/products_list_screen.dart'
     as _i2;
-import 'package:replacenamehere/features/products/presentation/screens/splash_screen/splash_screen.dart'
+import 'package:shopy/features/products/presentation/screens/splash_screen/splash_screen.dart'
     as _i3;
 
 /// generated route for
@@ -26,11 +26,11 @@ class ProductDetailRoute extends _i4.PageRouteInfo<ProductDetailRouteArgs> {
     required int id,
     List<_i4.PageRouteInfo>? children,
   }) : super(
-         ProductDetailRoute.name,
-         args: ProductDetailRouteArgs(key: key, id: id),
-         rawPathParams: {'id': id},
-         initialChildren: children,
-       );
+          ProductDetailRoute.name,
+          args: ProductDetailRouteArgs(key: key, id: id),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
 
   static const String name = 'ProductDetailRoute';
 
@@ -63,7 +63,7 @@ class ProductDetailRouteArgs {
 /// [_i2.ProductsListScreen]
 class ProductsListRoute extends _i4.PageRouteInfo<void> {
   const ProductsListRoute({List<_i4.PageRouteInfo>? children})
-    : super(ProductsListRoute.name, initialChildren: children);
+      : super(ProductsListRoute.name, initialChildren: children);
 
   static const String name = 'ProductsListRoute';
 
@@ -79,7 +79,7 @@ class ProductsListRoute extends _i4.PageRouteInfo<void> {
 /// [_i3.SplashScreen]
 class SplashRoute extends _i4.PageRouteInfo<void> {
   const SplashRoute({List<_i4.PageRouteInfo>? children})
-    : super(SplashRoute.name, initialChildren: children);
+      : super(SplashRoute.name, initialChildren: children);
 
   static const String name = 'SplashRoute';
 
