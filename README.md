@@ -80,3 +80,9 @@ Para mantener un código más limpio y evitar imports extensos, es **obligatorio
 export 'custom_button.dart';
 export 'custom_text_field.dart';
 ```
+
+## Generador de código (Retrofit, AutoRoute, JsonAnnotation)
+
+```bash
+dart pub run build_runner build --delete-conflicting-outputs
+```

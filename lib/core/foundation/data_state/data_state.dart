@@ -21,8 +21,7 @@ class DataSuccess<T> extends DataState<T> {
 class DataError<T> extends DataState<T> {
   DataError(DioException error) : super(error: error);
 
-  
-    factory DataError.fromDioException(DioException e) {
+  factory DataError.fromDioException(DioException e) {
     final statusCode = e.response?.statusCode;
     String? message;
 
@@ -34,12 +33,14 @@ class DataError<T> extends DataState<T> {
     if (statusCode == 500) {
       message ??= "Error interno del servidor.";
     } else if (statusCode == null) {
-      message ??= "Hubo problemas al conectar con el servidor. Inténtelo más tarde.";
+      message ??=
+          "Hubo problemas al conectar con el servidor. Inténtelo más tarde.";
     } else {
-      message ??= "Error al intentar iniciar sesión, inténtelo de nuevo más tarde.";
+      message ??=
+          "Error al intentar iniciar sesión, inténtelo de nuevo más tarde.";
     }
 
-    return DataError(
+    return DataError<T>(
       DioException(
         requestOptions: e.requestOptions,
         response: e.response,

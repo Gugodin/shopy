@@ -1,1 +1,1 @@
-export 'products/auth.dart';
+export 'products/products.dart';

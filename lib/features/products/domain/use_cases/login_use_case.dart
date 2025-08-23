@@ -3,28 +3,17 @@ import 'package:replacenamehere/core/core.dart';
 
 import '../domain.dart';
 
-class LoginUseCase extends UseCase<DataState<UserEntity>, LoginParams> {
+class LoginUseCase extends UseCase<DataState<List<ProductEntity>>, void> {
 
-  final AuthRepository _authRepository;
+  final ProductsRepository _productsRepository;
   
-  LoginUseCase(this._authRepository);
+  LoginUseCase(this._productsRepository);
 
   @override
-  Future<DataState<UserEntity>> call({LoginParams? params}) async {
-    if (params == null) {
-      throw Exception('LoginParams cannot be null');
-    }
-    return _authRepository.login(params.email, params.password);
+  Future<DataState<List<ProductEntity>>> call({void params}) async {
+
+    return _productsRepository.getAllProducts();
   }
 }
 
 
-class LoginParams {
-  final String email;
-  final String password;
-
-  LoginParams({
-    required this.email,
-    required this.password,
-  });
-}

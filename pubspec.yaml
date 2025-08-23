@@ -12,9 +12,7 @@ dependencies:
   auto_route: ^10.0.1
   flutter_bounceable: ^1.2.0
   retrofit: ^4.4.0
-  json_annotation: ^4.9.0
   dio: ^5.8.0+1
-  json_serializable: ^6.9.5
   flutter_riverpod: ^2.6.1
   pull_to_refresh: ^2.0.0
   flutter_svg: ^2.1.0
