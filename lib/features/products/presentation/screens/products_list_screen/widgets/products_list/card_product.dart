@@ -18,7 +18,8 @@ class CardProduct extends StatelessWidget {
     final theme = Theme.of(context);
     return Bounceable(
       onTap: () => context.pushRoute(
-        ProductDetailRoute(id: product.id),
+        ProductDetailRoute(
+            product: ProductDetailEntity.fromProductEntity(product)),
       ),
       child: Container(
         padding: EdgeInsets.all(10),

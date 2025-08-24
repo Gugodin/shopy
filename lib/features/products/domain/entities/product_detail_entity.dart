@@ -9,4 +9,14 @@ class ProductDetailEntity extends ProductEntity {
       required super.category,
       required super.image,
       required super.rating});
+  ProductDetailEntity.fromProductEntity(ProductEntity product)
+      : super(
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          description: product.description,
+          category: product.category,
+          image: product.image,
+          rating: product.rating,
+        );
 }

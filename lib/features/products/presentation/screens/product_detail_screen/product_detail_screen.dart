@@ -2,14 +2,21 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
-import 'package:shopy/core/components/category_chip.dart';
-import 'package:shopy/core/components/components.dart';
 import 'package:shopy/features/products/domain/domain.dart';
+
+import '../../../../../core/core.dart';
 
 @RoutePage()
 class ProductDetailScreen extends StatefulWidget {
-  final int id;
-  const ProductDetailScreen({super.key, @PathParam('id') required this.id});
+  // ¿Por que pasamos 2 parametros que servirían para lo mismo?
+  // La vista quedará lista para el uso de deep linking, permitiendo que se pueda acceder a esta pantalla directamente de los servicios
+  // SI la vista trae un id proporcionado, se utilizará para cargar el producto correspondiente
+  // SI la vista trae un producto, se utilizará directamente
+  // Así evitamos que el usuario tenga que esperar a que se cargue el producto
+  final int? id;
+  final ProductDetailEntity? product;
+  const ProductDetailScreen(
+      {super.key, @PathParam('id') this.id, this.product});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -21,16 +28,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch product details using the provided id
-    product = ProductDetailEntity(
-        id: widget.id,
-        title: 'Mens Casual Premium Slim Fit T-Shirts',
-        price: 29.99,
-        description:
-            'Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.',
-        category: Category.mensClothing,
-        rating: Rating(rate: 4.5, count: 100),
-        image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png");
+
+    if (widget.product != null) {
+      product = widget.product!;
+    } else {
+      // Fetch product details using the provided id
+      product = ProductDetailEntity(
+          id: widget.id ?? 1,
+          title: 'Mens Casual Premium Slim Fit T-Shirts',
+          price: 29.99,
+          description:
+              'Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.',
+          category: Category.mensClothing,
+          rating: Rating(rate: 4.5, count: 100),
+          image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png");
+    }
   }
 
   bool isFavorite = false;

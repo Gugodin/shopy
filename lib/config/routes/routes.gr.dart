@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:flutter/material.dart' as _i5;
+import 'package:shopy/features/products/domain/domain.dart' as _i6;
 import 'package:shopy/features/products/presentation/screens/product_detail_screen/product_detail_screen.dart'
     as _i1;
 import 'package:shopy/features/products/presentation/screens/products_list_screen/products_list_screen.dart'
@@ -23,14 +24,15 @@ import 'package:shopy/features/products/presentation/screens/splash_screen/splas
 class ProductDetailRoute extends _i4.PageRouteInfo<ProductDetailRouteArgs> {
   ProductDetailRoute({
     _i5.Key? key,
-    required int id,
+    int? id,
+    _i6.ProductDetailEntity? product,
     List<_i4.PageRouteInfo>? children,
   }) : super(
-          ProductDetailRoute.name,
-          args: ProductDetailRouteArgs(key: key, id: id),
-          rawPathParams: {'id': id},
-          initialChildren: children,
-        );
+         ProductDetailRoute.name,
+         args: ProductDetailRouteArgs(key: key, id: id, product: product),
+         rawPathParams: {'id': id},
+         initialChildren: children,
+       );
 
   static const String name = 'ProductDetailRoute';
 
@@ -39,23 +41,29 @@ class ProductDetailRoute extends _i4.PageRouteInfo<ProductDetailRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<ProductDetailRouteArgs>(
-        orElse: () => ProductDetailRouteArgs(id: pathParams.getInt('id')),
+        orElse: () => ProductDetailRouteArgs(id: pathParams.optInt('id')),
       );
-      return _i1.ProductDetailScreen(key: args.key, id: args.id);
+      return _i1.ProductDetailScreen(
+        key: args.key,
+        id: args.id,
+        product: args.product,
+      );
     },
   );
 }
 
 class ProductDetailRouteArgs {
-  const ProductDetailRouteArgs({this.key, required this.id});
+  const ProductDetailRouteArgs({this.key, this.id, this.product});
 
   final _i5.Key? key;
 
-  final int id;
+  final int? id;
+
+  final _i6.ProductDetailEntity? product;
 
   @override
   String toString() {
-    return 'ProductDetailRouteArgs{key: $key, id: $id}';
+    return 'ProductDetailRouteArgs{key: $key, id: $id, product: $product}';
   }
 }
 
@@ -63,7 +71,7 @@ class ProductDetailRouteArgs {
 /// [_i2.ProductsListScreen]
 class ProductsListRoute extends _i4.PageRouteInfo<void> {
   const ProductsListRoute({List<_i4.PageRouteInfo>? children})
-      : super(ProductsListRoute.name, initialChildren: children);
+    : super(ProductsListRoute.name, initialChildren: children);
 
   static const String name = 'ProductsListRoute';
 
@@ -79,7 +87,7 @@ class ProductsListRoute extends _i4.PageRouteInfo<void> {
 /// [_i3.SplashScreen]
 class SplashRoute extends _i4.PageRouteInfo<void> {
   const SplashRoute({List<_i4.PageRouteInfo>? children})
-      : super(SplashRoute.name, initialChildren: children);
+    : super(SplashRoute.name, initialChildren: children);
 
   static const String name = 'SplashRoute';
 

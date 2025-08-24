@@ -1,4 +1,3 @@
-import 'package:shopy/features/products/data/models/product_detail_model.dart';
 
 import '../../domain/domain.dart';
 
@@ -17,7 +16,7 @@ class ProductModel extends ProductEntity {
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json['id'],
         title: json['title'],
-        price: json['price'],
+        price: (json['price'] as num).toDouble(),
         description: json['description'],
         category: Category.fromApiValue(json['category']),
         image: json['image'],
