@@ -6,8 +6,7 @@ class HeaderProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final statusBarHeight =
-        MediaQuery.paddingOf(context).top; // ✅ Altura del status bar
+    final statusBarHeight = MediaQuery.paddingOf(context).top + 15;
     return Container(
       padding: EdgeInsets.only(top: statusBarHeight, left: 15, right: 15),
       decoration: BoxDecoration(
