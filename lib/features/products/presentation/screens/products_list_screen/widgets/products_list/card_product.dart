@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
@@ -16,7 +17,9 @@ class CardProduct extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Bounceable(
-      onTap: () {},
+      onTap: () => context.pushRoute(
+        ProductDetailRoute(id: product.id),
+      ),
       child: Container(
         padding: EdgeInsets.all(10),
         height: size.height * 0.18,
@@ -31,7 +34,9 @@ class CardProduct extends StatelessWidget {
                 flex: 1,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: CachedNetworkImage(imageUrl: product.image),
+                  child: Hero(
+                      tag: 'product_image_${product.id}',
+                      child: CachedNetworkImage(imageUrl: product.image)),
                 )),
             Expanded(
                 flex: 2,
@@ -76,24 +81,6 @@ class CardProduct extends StatelessWidget {
                             ),
                           ],
                         )),
-                    // Text(
-                    //   product.title,
-                    //   maxLines: 2,
-                    //   overflow: TextOverflow.ellipsis,
-                    //   style: theme.textTheme.titleLarge,
-                    // ),
-                    // const SizedBox(height: 10.0),
-                    // Text(
-                    //   '\$${product.price}',
-                    //   style: const TextStyle(
-                    //       fontSize: 14.0, fontWeight: FontWeight.w500),
-                    // ),
-                    // const SizedBox(height: 5.0),
-                    // Text(
-                    //   product.category,
-                    //   style:
-                    //       const TextStyle(fontSize: 12.0, color: Colors.grey),
-                    // ),
                   ],
                 )),
           ],
