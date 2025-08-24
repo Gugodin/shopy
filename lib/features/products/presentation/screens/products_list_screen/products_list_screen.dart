@@ -2,9 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../config/config.dart';
-import '../../../../../core/core.dart';
-import '../../presentation.dart';
+import 'widgets/widgets.dart';
 
 @RoutePage()
 class ProductsListScreen extends ConsumerStatefulWidget {
@@ -15,30 +13,36 @@ class ProductsListScreen extends ConsumerStatefulWidget {
 }
 
 class _ProductsListScreenState extends ConsumerState<ProductsListScreen> {
+  bool isThereCategorySelected = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(title: const Text('Login')),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
+    Size size = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        // appBar: AppBar(title: const Text('Login')),
+        body: SingleChildScrollView(
           child: Column(
+            spacing: 10,
             children: [
-              Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.blue,
-                  )),
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    color: Colors.red,
-                  )),
-              Expanded(
-                  flex: 3,
-                  child: Container(
-                    color: Colors.green,
-                  )),
+              SizedBox(
+                height: size.height * 0.2,
+                child: HeaderProductsList(),
+              ),
+              SizedBox(
+                child: FilterProductsList(
+                  onCategorySelected: (isDisplayedCategoryChip) => setState(() {
+                    isThereCategorySelected = isDisplayedCategoryChip;
+                  }),
+                ),
+              ),
+              SizedBox(
+                height: isThereCategorySelected
+                    ? size.height * 0.6
+                    : size.height * 0.65,
+                child: ProductsList(),
+              ),
             ],
           ),
         ),

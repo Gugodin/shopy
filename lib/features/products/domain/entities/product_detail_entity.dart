@@ -7,5 +7,6 @@ class ProductDetailEntity extends ProductEntity {
       required super.price,
       required super.description,
       required super.category,
-      required super.image});
+      required super.image,
+      required super.rating});
 }

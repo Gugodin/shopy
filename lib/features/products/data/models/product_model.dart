@@ -1,3 +1,5 @@
+import 'package:shopy/features/products/data/models/product_detail_model.dart';
+
 import '../../domain/domain.dart';
 
 class ProductModel extends ProductEntity {
@@ -7,6 +9,7 @@ class ProductModel extends ProductEntity {
       required super.price,
       required super.description,
       required super.category,
+      required super.rating,
       required super.image});
 
   // Factory que simula la conversión de JSON a ProductModel
@@ -16,7 +19,13 @@ class ProductModel extends ProductEntity {
         title: json['title'],
         price: json['price'],
         description: json['description'],
-        category: json['category'],
+        category: Category.fromApiValue(json['category']),
         image: json['image'],
+        rating: Rating(
+          rate: (json['rating']['rate'] as num).toDouble(),
+          count: json['rating']['count'],
+        ),
       );
 }
+
+

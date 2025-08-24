@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primaryColor = Color(0xFF0A2342); // Azul marino
-  static const Color primaryLight = Color(0xFF274472);
-  static const Color primaryDark = Color(0xFF07162B);
-  static const Color secondaryColor = Color(0xFF185ADB);
-  static const Color backgroundColor = Color(0xFFF5F7FA);
-  static const Color surfaceColor = Color(0xFFE3E9F3);
-  static const Color onPrimary = Colors.white;
-  static const Color onSecondary = Colors.white;
-  static const Color onBackground = Color(0xFF0A2342);
-  static const Color onSurface = Color(0xFF0A2342);
+  // Base (dark + mint accent)
+  static const Color primaryColor = Color(0xFF00BFA6); // Verde menta fuerte
+  static const Color primaryLight = Color(0xFF4CFFE6); // Verde menta claro
+  static const Color primaryDark = Color(0xFF008C77); // Verde menta oscuro
+
+  static const Color secondaryColor = Color(0xFF26C6DA); // Cian-menta
+
+  // Fondo y superficies (tema oscuro)
+  static const Color backgroundColor = Color(0xFF121212); // Dark background
+  static const Color surfaceColor = Color(0xFF1E1E1E); // Superficie gris oscura
+
+  // Texto sobre cada color
+  static const Color onPrimary = Colors.black; // contraste sobre menta
+  static const Color onSecondary = Colors.black;
+  static const Color onBackground = Colors.white;
+  static const Color onSurface = Colors.white;
 }
 
 class AppTextStyles {
@@ -26,7 +32,7 @@ class AppTextStyles {
   static const TextStyle description = TextStyle(
     fontFamily: "Sans",
     fontSize: 16,
-    color: Colors.black87,
+    color: Colors.white70,
     letterSpacing: 1.2,
     wordSpacing: 2,
     fontWeight: FontWeight.w400,
@@ -49,7 +55,7 @@ class AppTextStyles {
 class AppShadowStyle {
   static List<BoxShadow> generalShadow = [
     const BoxShadow(
-      color: Color(0x26AAA9A9),
+      color: Color(0x6600BFA6), // sombra con tinte menta
       blurRadius: 8,
       spreadRadius: 2,
       offset: Offset(0, 6),
@@ -58,7 +64,7 @@ class AppShadowStyle {
 
   static List<BoxShadow> btnShadow = [
     const BoxShadow(
-      color: Color(0x26AAA9A9),
+      color: Color(0x3300BFA6), // sombra ligera menta
       blurRadius: 5,
       spreadRadius: 1,
       offset: Offset(0, 0),
@@ -67,16 +73,19 @@ class AppShadowStyle {
 
   static List<BoxShadow> containerShadow = [
     BoxShadow(
-        color: Colors.black.withAlpha(128),
-        blurRadius: 10,
-        spreadRadius: -3,
-        offset: const Offset(0, 0))
+      color: Colors.black.withAlpha(180),
+      blurRadius: 10,
+      spreadRadius: -3,
+      offset: const Offset(0, 0),
+    )
   ];
+
   static List<BoxShadow> containerImageShadow = [
     BoxShadow(
-        color: Colors.black.withAlpha(128),
-        blurRadius: 7,
-        spreadRadius: -3,
-        offset: const Offset(0, -1))
+      color: Colors.black.withAlpha(160),
+      blurRadius: 7,
+      spreadRadius: -3,
+      offset: const Offset(0, -1),
+    )
   ];
 }
