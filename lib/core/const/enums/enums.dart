@@ -4,3 +4,11 @@ enum TypeFilter {
   rating,
 }
 
+enum TypeErrors{
+  serverError("Error del servidor"),
+  generalError("Error general");
+
+  final String message;
+
+  const TypeErrors(this.message);
+}

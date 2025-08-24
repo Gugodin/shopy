@@ -3,7 +3,6 @@ part of 'product_list_provider.dart';
 
 abstract class ProductsListState {}
 
-class ProductsListInitial extends ProductsListState {}
 class ProductsListLoading extends ProductsListState {}
 class ProductsListEmpty extends ProductsListState {}
 class ProductsListLoaded extends ProductsListState {

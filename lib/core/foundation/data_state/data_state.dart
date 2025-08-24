@@ -13,44 +13,61 @@ class DataSuccess<T> extends DataState<T> {
 }
 
 class DataError<T> extends DataState<T> {
-  final String? message;
-  DataError({this.message});
+  final String? technicalMessage; // Para desarrolladores
+  final String? userMessage; // Para usuarios
+
+  DataError({this.technicalMessage, this.userMessage});
 }
 
 class DataDioError<T> extends DataError<T> {
   final DioException error;
-  DataDioError(this.error) : super(message: null);
+  DataDioError(
+      {required this.error, super.userMessage, super.technicalMessage});
 
   factory DataDioError.fromDioException(DioException e) {
     final statusCode = e.response?.statusCode;
-    String? message;
+    String userMessage;
+    String technicalMessage;
 
-    final data = e.response?.data;
-    if (data is Map && data['message'] != null) {
-      message = data['message'] as String;
+    // Mensaje técnico detallado
+    technicalMessage =
+        'DioException: ${e.type} - Status: $statusCode - ${e.message}';
+
+    // Mensaje amigable para el usuario
+    switch (statusCode) {
+      case 404:
+        userMessage = 'No pudimos encontrar lo que buscas';
+        break;
+      case 500:
+      case 502:
+      case 503:
+        userMessage =
+            'El servidor está teniendo problemas. Inténtalo en unos minutos';
+        break;
+      case 408:
+        userMessage = 'La conexión tardó demasiado. Revisa tu internet';
+        break;
+      default:
+        if (e.type == DioExceptionType.connectionTimeout) {
+          userMessage = 'Sin conexión a internet. Revisa tu conexión';
+        } else {
+          userMessage = 'Hay un problema con el servicio. Inténtalo más tarde';
+        }
     }
 
-    if (statusCode == 500) {
-      message ??= "Error interno del servidor.";
-    } else if (statusCode == null) {
-      message ??=
-          "Hubo problemas al conectar con el servidor. Inténtelo más tarde.";
-    } else {
-      message ??=
-          "Error al intentar iniciar sesión, inténtelo de nuevo más tarde.";
-    }
     final errorDioGenerated = DataDioError<T>(
-      DioException(
+      error: DioException(
         requestOptions: e.requestOptions,
         response: e.response,
         type: e.type,
-        error: message,
-        message: message,
+        error: technicalMessage,
+        message: technicalMessage,
       ),
+      userMessage: userMessage,
+      technicalMessage: technicalMessage,
     );
 
     debugPrint(errorDioGenerated.toString());
-
     return errorDioGenerated;
   }
 
@@ -75,12 +92,13 @@ class DataGeneralError<T> extends DataError<T> {
   String stackTrace;
 
   DataGeneralError({
-    required super.message,
+    required String userMessage,
+    required String technicalMessage,
     required this.module,
     required this.stackTrace,
     required this.file,
     required this.line,
-  });
+  }) : super(userMessage: userMessage, technicalMessage: technicalMessage);
 
   factory DataGeneralError.fromException(
       {required String message,
@@ -88,34 +106,14 @@ class DataGeneralError<T> extends DataError<T> {
       required String file,
       required String line,
       required String stacktrace}) {
-    final error = DataGeneralError<T>(
-      message: message,
+    return DataGeneralError<T>(
+      userMessage:
+          'Algo salió mal en la aplicación. Nuestro equipo fue notificado',
+      technicalMessage: message,
       module: module,
       file: file,
       line: line,
       stackTrace: stacktrace,
     );
-
-    debugPrint(
-      error.toString(),
-    );
-
-    return error;
-  }
-
-  @override
-  String toString() {
-    return '''
-    🔴 ERROR GENERAL 💻
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    📍 Módulo:     $module
-    📍 Archivo:    $file
-    📍 Línea:      $line
-    📍 Mensaje:    $message
-
-    📋 STACK TRACE:
-    $stackTrace
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-''';
   }
 }

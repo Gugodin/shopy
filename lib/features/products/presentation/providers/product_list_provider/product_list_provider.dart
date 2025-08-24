@@ -18,7 +18,7 @@ final productListNotifierProvider =
 class ProductListNotifier extends StateNotifier<ProductsListState> {
   final GetAllProductsUC _getAllProductsUC;
 
-  ProductListNotifier(this._getAllProductsUC) : super(ProductsListInitial()) {
+  ProductListNotifier(this._getAllProductsUC) : super(ProductsListLoading()) {
     fetchProducts();
   }
 
@@ -34,15 +34,10 @@ class ProductListNotifier extends StateNotifier<ProductsListState> {
         state = ProductsListLoaded(result.data);
       }
     } else if (result is DataDioError<List<ProductEntity>>) {
-      state = ProductsListError(
-          message:
-              'Ocurrió un error al obtener los productos. Por favor, inténtelo de nuevo más tarde.',
-          error: result);
+      state = ProductsListError(message: result.userMessage!, error: result);
     } else if (result is DataGeneralError<List<ProductEntity>>) {
-      state = ProductsListError(
-          message:
-              'Ocurrió un error que no debió ocurrir. Por favor, inténtelo de nuevo más tarde.',
-          error: result);
+      state = ProductsListError(message: result.userMessage!, error: result);
     }
   }
 }
+ 
