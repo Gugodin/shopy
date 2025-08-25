@@ -6,8 +6,9 @@ import '../../../../../../core/core.dart';
 import '../../../providers/providers.dart';
 
 class FilterProductsList extends ConsumerStatefulWidget {
+  final TextEditingController controller;
   final Function(bool isDisplayedCategoryChip) onCategorySelected;
-  const FilterProductsList({super.key, required this.onCategorySelected});
+  const FilterProductsList({super.key, required this.onCategorySelected, required this.controller});
 
   @override
   ConsumerState<FilterProductsList> createState() => _FilterProductsListState();
@@ -21,7 +22,7 @@ class _FilterProductsListState extends ConsumerState<FilterProductsList> {
 
   initState() {
     super.initState();
-    controller = TextEditingController();
+    controller = widget.controller;
 
     debouncer = TextFieldDebouncer(onChanged: onSearchChanged);
 

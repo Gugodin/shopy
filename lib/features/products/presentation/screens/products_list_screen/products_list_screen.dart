@@ -17,6 +17,8 @@ class ProductsListScreen extends ConsumerStatefulWidget {
 class _ProductsListScreenState extends ConsumerState<ProductsListScreen> {
   bool isThereCategorySelected = false;
 
+  final TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,6 +36,7 @@ class _ProductsListScreenState extends ConsumerState<ProductsListScreen> {
               ),
               SizedBox(
                 child: FilterProductsList(
+                  controller: searchController,
                   onCategorySelected: (isDisplayedCategoryChip) => setState(() {
                     isThereCategorySelected = isDisplayedCategoryChip;
                   }),
@@ -59,10 +62,18 @@ class _ProductsListScreenState extends ConsumerState<ProductsListScreen> {
       case ProductsListLoaded() || ProductsListLoading():
         return ProductsList();
       case ProductsListEmpty():
+        final currentState = productsListState;
+
         return EmptyStateScreen(
           entity: 'productos',
           onRetry: () {
-            ref.read(productListNotifierProvider.notifier).fetchProducts();
+            if (currentState.products != null &&
+                currentState.products!.isNotEmpty) {
+              searchController.clear();
+              ref.read(productListNotifierProvider.notifier).clearFilters();
+            } else {
+              ref.read(productListNotifierProvider.notifier).fetchProducts();
+            }
           },
         );
       case ProductsListError():
