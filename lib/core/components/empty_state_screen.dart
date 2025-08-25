@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shopy/config/assets/assets.dart';
 
-import '../../../../../../config/config.dart';
-import '../../../providers/providers.dart';
-
-class ErrorProductsListScreen extends StatelessWidget {
-  final ProductsListError error;
-  final String nameButton;
+class EmptyStateScreen extends StatelessWidget {
   final Function()? onRetry;
-
-  const ErrorProductsListScreen({super.key, required this.error, this.onRetry, required this.nameButton});
+  final String entity;
+  const EmptyStateScreen(
+      {super.key, this.onRetry, required this.entity});
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +16,21 @@ class ErrorProductsListScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: 10,
       children: [
-        Lottie.asset(AppAssets.lottieAssets.serverErrorAnimation,
+        Lottie.asset(AppAssets.lottieAssets.emptyAnimation,
             width: 300, height: 300, fit: BoxFit.fill),
         Text(
-          'Upss, parece que algo salió mal',
+          '¡Nada por aquí!',
           textAlign: TextAlign.center,
           style: theme.textTheme.headlineSmall,
         ),
         Text(
-          error.message,
+          'Parece que los $entity se fueron de vacaciones',
           textAlign: TextAlign.center,
           style: theme.textTheme.bodyMedium,
         ),
         ElevatedButton(
           onPressed: onRetry,
-          child: Text(nameButton),
+          child: Text('Volver a cargar $entity'),
         ),
       ],
     );

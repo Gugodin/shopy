@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../core/core.dart';
 import '../../providers/providers.dart';
-import 'states_screens/states_screens.dart';
 import 'widgets/widgets.dart';
 
 @RoutePage()
@@ -61,15 +61,15 @@ class _ProductsListScreenState extends ConsumerState<ProductsListScreen> {
       case ProductsListLoaded():
         return ProductsList();
       case ProductsListEmpty():
-        return EmptyProductsListScreen(
+        return EmptyStateScreen(
           entity: 'productos',
           onRetry: () {
             ref.read(productListNotifierProvider.notifier).fetchProducts();
           },
         );
       case ProductsListError():
-        return ErrorProductsListScreen(
-          error: productsListState,
+        return ErrorStateScreen(
+          messageErrorToUser: productsListState.message,
           nameButton: 'Intentar de nuevo',
           onRetry: () {
             ref.read(productListNotifierProvider.notifier).fetchProducts();

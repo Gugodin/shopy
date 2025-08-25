@@ -24,8 +24,3 @@ abstract class ProductsDataSource {
     @Path('id') String id,
   );
 }
-
-// GET
-// https://fakestoreapi.com/products
-// 
-// https://fakestoreapi.com/products/{id}

@@ -19,7 +19,11 @@ class CardProduct extends StatelessWidget {
     return Bounceable(
       onTap: () => context.pushRoute(
         ProductDetailRoute(
-            product: ProductDetailEntity.fromProductEntity(product)),
+          // Comportamiento dentro de la app
+          product: ProductDetailEntity.fromProductEntity(product),
+          //TODO: Simulando deep linking
+          // id: product.id,
+        ),
       ),
       child: Container(
         padding: EdgeInsets.all(10),

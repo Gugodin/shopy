@@ -14,35 +14,32 @@ class ProductsRepositoryImp implements ProductsRepository {
       return DataSuccess(response.data);
     } on DioException catch (e) {
       return DataDioError.fromDioException(e);
-    } catch (e) {
+    } catch (e, stackTrace) {
       return DataGeneralError.fromException(
         message: e.toString(),
         module: 'ProductsRepository',
         file: 'products_repository_imp.dart',
         line: 'getAllProducts()',
-        stacktrace: StackTrace.current.toString(),
+        stacktrace: stackTrace.toString(),
       );
     }
   }
 
   @override
   Future<DataState<ProductDetailEntity>> getProductById(int id) async {
-    // TODO: implement getProductById
-    throw UnimplementedError();
+    try {
+      final response = await productsAPI.getProductById(id.toString());
+      return DataSuccess(response.data);
+    } on DioException catch (e) {
+      return DataDioError.fromDioException(e);
+    } catch (e, stackTrace) {
+      return DataGeneralError.fromException(
+        message: e.toString(),
+        module: 'ProductsRepository',
+        file: 'products_repository_imp.dart',
+        line: 'getProductById()',
+        stacktrace: stackTrace.toString(),
+      );
+    }
   }
-
-  // @override
-  // Future<DataState<UserEntity>> login(String email, String password) async {
-  //   try {
-  //     // final response = await authAPI.login(email, password);
-
-  //     // final apiResponse = response.data;
-
-  //     return DataSuccess(UserModel.fromJson({}));
-  //   } on DioException catch (e) {
-  //     // Se llama al factory de DataError para crear el error
-  //     // a partir de la excepción de Dio
-  //     return DataError.fromDioException(e);
-  //   }
-  // }
 }
