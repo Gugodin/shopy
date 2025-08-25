@@ -6,7 +6,7 @@ import '../data.dart';
 
 
 class ProductsRepositoryImp implements ProductsRepository {
-  final productsAPI = ProductsDataSource(DioClient(showLogs:true).dio);
+  final productsAPI = ProductsDataSource(DioClient().dio);
   @override
   Future<DataState<List<ProductEntity>>> getAllProducts() async {
     try {

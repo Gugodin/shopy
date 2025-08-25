@@ -20,9 +20,9 @@ class CardProduct extends StatelessWidget {
       onTap: () => context.pushRoute(
         ProductDetailRoute(
           // Comportamiento normal dentro de la app
-          // product: ProductDetailEntity.fromProductEntity(product),
+          product: ProductDetailEntity.fromProductEntity(product),
           //TODO: Simulando deep linking
-          id: product.id,
+          // id: product.id,
         ),
       ),
       child: Container(
@@ -68,7 +68,8 @@ class CardProduct extends StatelessWidget {
                             product.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: theme.textTheme.titleLarge,
+                            style: theme.textTheme.titleLarge!
+                                .copyWith(color: theme.colorScheme.onSurface),
                           ),
                         )),
                     Expanded(
@@ -85,8 +86,10 @@ class CardProduct extends StatelessWidget {
                         )),
                     Expanded(
                         flex: 1,
-                        child: CustomRatingStars(value: product.rating.rate)
-                        ),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child:
+                                CustomRatingStars(value: product.rating.rate))),
                   ],
                 )),
           ],

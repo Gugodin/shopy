@@ -23,7 +23,6 @@ class _ProductsListScreenState extends ConsumerState<ProductsListScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        // appBar: AppBar(title: const Text('Login')),
         body: SingleChildScrollView(
           child: Column(
             spacing: 10,
