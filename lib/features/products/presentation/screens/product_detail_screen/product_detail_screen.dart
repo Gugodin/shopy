@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide BackButton;
 import 'package:shopy/features/products/domain/domain.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../core/core.dart';
 import 'widgets/widget.dart';
@@ -25,7 +26,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     if (widget.product != null) {
-      return ProductDetailView(product: widget.product!);
+      return Skeletonizer(
+          enabled: false, child: ProductDetailView(product: widget.product!));
     }
 
     if (widget.id != null) {

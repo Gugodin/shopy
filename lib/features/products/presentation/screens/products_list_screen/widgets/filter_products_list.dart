@@ -16,7 +16,36 @@ class FilterProductsList extends ConsumerStatefulWidget {
 class _FilterProductsListState extends ConsumerState<FilterProductsList> {
   bool isThereCategorySelected = false;
 
-  final TextEditingController controller = TextEditingController();
+  late TextEditingController controller;
+  late TextFieldDebouncer debouncer;
+
+  initState() {
+    super.initState();
+    controller = TextEditingController();
+
+    debouncer = TextFieldDebouncer(onChanged: onSearchChanged);
+
+    debouncer.registerController(controller);
+  }
+
+  void onSearchChanged() {
+    controller.addListener(() {
+      ref
+          .read(productListNotifierProvider.notifier)
+          .filterProductsByName(controller.text);
+      if (controller.text.isEmpty) {
+        ref.read(productListNotifierProvider.notifier).clearFilters();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    debouncer.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final filters = ref.watch(filterProvider);

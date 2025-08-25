@@ -13,11 +13,11 @@ class ProductsList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productsListState = ref.watch(productListNotifierProvider);
-
+    
     final bool isLoading = productsListState is ProductsListLoading;
     final List<ProductEntity> products = isLoading
         ? List.generate(4, (index) => _createDummyProduct(index))
-        : (productsListState as ProductsListLoaded).products;
+        : (productsListState as ProductsListLoaded).filteredProducts;
 
     return Skeletonizer(
       enabled: isLoading,

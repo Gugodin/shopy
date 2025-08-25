@@ -32,12 +32,54 @@ class ProductListNotifier extends StateNotifier<ProductsListState> {
         state = ProductsListEmpty();
         return;
       } else {
-        state = ProductsListLoaded(result.data);
+        state = ProductsListLoaded.withoutFilter(products: result.data);
       }
     } else if (result is DataDioError<List<ProductEntity>>) {
       state = ProductsListError(message: result.userMessage!, error: result);
     } else if (result is DataGeneralError<List<ProductEntity>>) {
       state = ProductsListError(message: result.userMessage!, error: result);
+    }
+  }
+
+  Future<void> filterProductsByName(String nameProduct) async {
+    if (state is ProductsListLoaded) {
+      final currentState = state as ProductsListLoaded;
+
+      final filtered = currentState.products.where((product) {
+        return product.title.toLowerCase().contains(nameProduct.toLowerCase());
+      }).toList();
+
+      if (filtered.isEmpty) {
+        state = ProductsListEmpty(products: currentState.products);
+      } else {
+        state = ProductsListLoaded(
+            filteredProducts: filtered, products: currentState.products);
+      }
+    }
+
+    if (state is ProductsListEmpty) {
+      final currentState = state as ProductsListEmpty;
+      final filtered = currentState.products!.where((product) {
+        return product.title.toLowerCase().contains(nameProduct.toLowerCase());
+      }).toList();
+
+      if (filtered.isEmpty) {
+        state = ProductsListEmpty(products: currentState.products);
+      } else {
+        state = ProductsListLoaded(
+            filteredProducts: filtered, products: currentState.products!);
+      }
+    }
+  }
+
+  Future<void> clearFilters() async {
+    if (state is ProductsListLoaded) {
+      final currentState = state as ProductsListLoaded;
+      state = ProductsListLoaded.withoutFilter(products: currentState.products);
+    }
+    if(state is ProductsListEmpty) {
+      final currentState = state as ProductsListEmpty;
+      state = ProductsListLoaded.withoutFilter(products: currentState.products!);
     }
   }
 }

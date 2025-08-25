@@ -12,8 +12,7 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         /// routes go here
-        AutoRoute(page: SplashRoute.page, initial: true, path: '/'),
-        AutoRoute(page: ProductsListRoute.page, path: '/products'),
+        AutoRoute(page: ProductsListRoute.page, initial: true, path: '/products'),
         AutoRoute(page: ProductDetailRoute.page, path: '/products/:id'),
       ];
 }

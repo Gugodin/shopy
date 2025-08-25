@@ -7,6 +7,15 @@ abstract class TypeFilter {
   const TypeFilter({required this.name});
 }
 
+class NameFilter extends TypeFilter {
+  final String searchTerm;
+
+  const NameFilter({required super.name, required this.searchTerm});
+
+  @override
+  String toString() => 'NameFilter(searchTerm: $searchTerm)';
+}
+
 class CategoryFilter extends TypeFilter {
   Category category;
   CategoryFilter({required super.name, required this.category});
