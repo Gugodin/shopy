@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopy/config/styles/styles.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../providers/providers.dart';
 
-class FilterProductsList extends StatefulWidget {
+class FilterProductsList extends ConsumerStatefulWidget {
   final Function(bool isDisplayedCategoryChip) onCategorySelected;
   const FilterProductsList({super.key, required this.onCategorySelected});
 
   @override
-  State<FilterProductsList> createState() => _FilterProductsListState();
+  ConsumerState<FilterProductsList> createState() => _FilterProductsListState();
 }
 
-class _FilterProductsListState extends State<FilterProductsList> {
+class _FilterProductsListState extends ConsumerState<FilterProductsList> {
   bool isThereCategorySelected = false;
 
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final filters = ref.watch(filterProvider);
     final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.all(8.0),
@@ -33,6 +36,7 @@ class _FilterProductsListState extends State<FilterProductsList> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
@@ -43,48 +47,24 @@ class _FilterProductsListState extends State<FilterProductsList> {
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 spacing: 8,
-                                children: [
-                                  CategoryChip(
-                                    label: 'Category 1',
-                                    onTap: () {
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: filters.map((filter) {
+                                  return FilterChipWidget(
+                                    typeFilter: filter,
+                                    onTap: (selectedFilter) {
                                       setState(() {
-                                        isThereCategorySelected = false;
+                                        ref
+                                            .read(filterProvider.notifier)
+                                            .update((state) =>
+                                                state..remove(selectedFilter));
+                                        isThereCategorySelected =
+                                            filters.isNotEmpty;
                                         widget.onCategorySelected(
                                             isThereCategorySelected);
                                       });
                                     },
-                                  ),
-                                  CategoryChip(
-                                    label: 'Category 2',
-                                    onTap: () {
-                                      setState(() {
-                                        isThereCategorySelected = false;
-                                        widget.onCategorySelected(
-                                            isThereCategorySelected);
-                                      });
-                                    },
-                                  ),
-                                  CategoryChip(
-                                    label: 'Category 2',
-                                    onTap: () {
-                                      setState(() {
-                                        isThereCategorySelected = false;
-                                        widget.onCategorySelected(
-                                            isThereCategorySelected);
-                                      });
-                                    },
-                                  ),
-                                  CategoryChip(
-                                    label: 'Category 2',
-                                    onTap: () {
-                                      setState(() {
-                                        isThereCategorySelected = false;
-                                        widget.onCategorySelected(
-                                            isThereCategorySelected);
-                                      });
-                                    },
-                                  ),
-                                ],
+                                  );
+                                }).toList(),
                               ),
                             ),
                           )
@@ -108,11 +88,22 @@ class _FilterProductsListState extends State<FilterProductsList> {
             flex: 1,
             child: CustomIconButton(
                 icon: Icons.filter_list,
-                onPressed: () {
-                  setState(() {
-                    isThereCategorySelected = !isThereCategorySelected;
-                    widget.onCategorySelected(isThereCategorySelected);
-                  });
+                onPressed: () async {
+                  final resp =
+                      await showFilterModal(context, initialFilters: filters);
+                  if (resp != null) {
+                    print('Filtros seleccionados');
+                    print(resp);
+                    ref.read(filterProvider.notifier).update((state) {
+                      return resp;
+                    });
+                    print('Provider: ');
+                    print(ref.read(filterProvider));
+                    setState(() {
+                      isThereCategorySelected = true;
+                      widget.onCategorySelected(isThereCategorySelected);
+                    });
+                  }
                 }),
           ),
         ],

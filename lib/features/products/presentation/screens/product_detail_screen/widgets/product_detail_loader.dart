@@ -58,17 +58,17 @@ class _ProductDetailLoaderState extends ConsumerState<ProductDetailLoader> {
             }
           });
           return ErrorStateScreen(
-          messageErrorToUser: error.toString(),
-          mainAxisAlignment: MainAxisAlignment.center,
-          nameButton: 'Intentar de nuevo',
-          needsBackButton: true,
-          onRetry: () {
-            setState(() {
-              isManualLoading = true;
-            });
-            ref.invalidate(productDetailProvider(widget.id));
-          },
-        );
+            messageErrorToUser: error.toString(),
+            mainAxisAlignment: MainAxisAlignment.center,
+            nameButton: 'Intentar de nuevo',
+            needsBackButton: true,
+            onRetry: () {
+              setState(() {
+                isManualLoading = true;
+              });
+              ref.invalidate(productDetailProvider(widget.id));
+            },
+          );
         },
       ),
     );

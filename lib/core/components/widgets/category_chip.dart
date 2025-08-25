@@ -2,20 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../core.dart';
+
 class CategoryChip extends StatelessWidget {
-  final String label;
-  final Function()? onTap;
-  const CategoryChip({super.key, required this.label, this.onTap});
+  final Category category;
+  final Function(Category categorySelected)? onTap;
+  final bool isSelected;
+  final double fontSize;
+  const CategoryChip(
+      {super.key, required this.category, this.onTap, this.isSelected = false, this.fontSize = 10});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Bounceable(
-      onTap: onTap,
+      onTap: () => onTap?.call(category),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
         decoration: BoxDecoration(
-          color: theme.colorScheme.primary,
+          color: onTap == null || isSelected
+              ? theme.colorScheme.primary
+              : Colors.grey,
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Row(
@@ -23,15 +30,15 @@ class CategoryChip extends StatelessWidget {
           children: [
             Skeleton.ignore(
               child: Text(
-                label,
-                style: const TextStyle(
+                category.displayName,
+                style:  TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
-                  fontSize: 10,
+                  fontSize: fontSize,
                 ),
               ),
             ),
-            if (onTap != null)
+            if (onTap != null && isSelected)
               const Padding(
                 padding: EdgeInsets.only(left: 4.0),
                 child: Icon(

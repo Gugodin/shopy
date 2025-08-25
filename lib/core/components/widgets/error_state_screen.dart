@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide BackButton;
 import 'package:lottie/lottie.dart';
 
-import '../../config/config.dart';
-import '../core.dart';
+import '../../../config/config.dart';
+import '../../core.dart';
 
 class ErrorStateScreen extends StatelessWidget {
   final String messageErrorToUser;

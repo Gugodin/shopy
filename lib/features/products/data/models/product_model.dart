@@ -1,4 +1,5 @@
 
+import '../../../../core/core.dart';
 import '../../domain/domain.dart';
 
 class ProductModel extends ProductEntity {

@@ -23,6 +23,7 @@ class _ProductsListScreenState extends ConsumerState<ProductsListScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Column(
             spacing: 10,

@@ -14,7 +14,7 @@ class ProductDetailView extends StatefulWidget {
 }
 
 class _ProductDetailViewState extends State<ProductDetailView> {
-    bool isFavorite = false;
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
-                      CategoryChip(label: widget.product.category.displayName),
+                      CategoryChip(category: widget.product.category),
                       Text(
                         '\$${widget.product.price}',
                         style: Theme.of(context).textTheme.headlineMedium,

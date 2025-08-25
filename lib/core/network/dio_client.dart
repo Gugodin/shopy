@@ -23,16 +23,18 @@ class DioClient {
     ));
     // Agrega un interceptor de logging para depuración
     // Imprime en consola las solicitudes y respuestas
-    dio.interceptors.add(
-      LogInterceptor(
-        request: showLogs,
-        requestHeader: showLogs,
-        requestBody: showLogs,
-        responseHeader: showLogs,
-        responseBody: showLogs,
-        error: showLogs,
-        logPrint: (obj) => print(obj),
-      ),
-    );
+    if (showLogs) {
+      dio.interceptors.add(
+        LogInterceptor(
+          request: true,
+          requestHeader: true,
+          requestBody: true,
+          responseHeader: true,
+          responseBody: true,
+          error: true,
+          logPrint: (obj) => print(obj),
+        ),
+      );
+    }
   }
 }

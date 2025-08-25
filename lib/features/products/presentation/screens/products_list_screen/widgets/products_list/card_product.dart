@@ -77,7 +77,7 @@ class CardProduct extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CategoryChip(label: product.category.displayName),
+                            CategoryChip(category: product.category),
                             Text(
                               '\$${product.price}',
                               style: theme.textTheme.titleMedium,

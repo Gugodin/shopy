@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../../../core/core.dart';
 import '../../../../domain/domain.dart';
 import '../../../providers/providers.dart';
 import 'products_list/card_product.dart';
