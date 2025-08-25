@@ -24,6 +24,7 @@ class ProductListNotifier extends StateNotifier<ProductsListState> {
 
   Future<void> fetchProducts() async {
     state = ProductsListLoading();
+
     final result = await _getAllProductsUC.call();
 
     if (result is DataSuccess<List<ProductEntity>>) {
@@ -40,4 +41,3 @@ class ProductListNotifier extends StateNotifier<ProductsListState> {
     }
   }
 }
- 

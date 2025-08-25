@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:shopy/config/config.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomIconButton extends StatelessWidget {
   final IconData icon;
@@ -25,9 +26,11 @@ class CustomIconButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
             boxShadow: AppShadowStyle.containerShadow,
           ),
-          child: Icon(
-            icon,
-            color: theme.colorScheme.onPrimary,
+          child: Skeleton.ignore(
+            child: Icon(
+              icon,
+              color: theme.colorScheme.onPrimary,
+            ),
           ),
         ),
       ),

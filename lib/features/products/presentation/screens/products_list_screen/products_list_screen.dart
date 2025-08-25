@@ -56,9 +56,7 @@ class _ProductsListScreenState extends ConsumerState<ProductsListScreen> {
     final productsListState = ref.watch(productListNotifierProvider);
 
     switch (productsListState) {
-      case ProductsListLoading():
-        return const Center(child: CircularProgressIndicator());
-      case ProductsListLoaded():
+      case ProductsListLoaded() || ProductsListLoading():
         return ProductsList();
       case ProductsListEmpty():
         return EmptyStateScreen(

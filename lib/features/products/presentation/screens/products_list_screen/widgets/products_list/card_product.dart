@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:shopy/config/config.dart';
 import 'package:shopy/core/components/components.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../domain/domain.dart';
 
@@ -19,10 +19,10 @@ class CardProduct extends StatelessWidget {
     return Bounceable(
       onTap: () => context.pushRoute(
         ProductDetailRoute(
-          // Comportamiento dentro de la app
-          product: ProductDetailEntity.fromProductEntity(product),
+          // Comportamiento normal dentro de la app
+          // product: ProductDetailEntity.fromProductEntity(product),
           //TODO: Simulando deep linking
-          // id: product.id,
+          id: product.id,
         ),
       ),
       child: Container(
@@ -39,9 +39,22 @@ class CardProduct extends StatelessWidget {
                 flex: 1,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Hero(
-                      tag: 'product_image_${product.id}',
-                      child: CachedNetworkImage(imageUrl: product.image)),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Skeletonizer.of(context).enabled
+                          ? theme.colorScheme.onSurface.withValues(alpha: 0.1)
+                          : Colors.transparent,
+                    ),
+                    child: Skeleton.replace(
+                      child: Hero(
+                          tag: 'product_image_${product.id}',
+                          child: CachedNetworkImage(imageUrl: product.image)),
+                    ),
+                  ),
                 )),
             Expanded(
                 flex: 2,
@@ -72,20 +85,8 @@ class CardProduct extends StatelessWidget {
                         )),
                     Expanded(
                         flex: 1,
-                        child: Row(
-                          children: [
-                            RatingStars(
-                              value: product.rating.rate,
-                              starCount: 5,
-                              starSize: 20,
-                              valueLabelColor: product.rating.rate >= 4
-                                  ? Colors.green
-                                  : (product.rating.rate >= 2
-                                      ? Colors.amber
-                                      : Colors.red),
-                            ),
-                          ],
-                        )),
+                        child: CustomRatingStars(value: product.rating.rate)
+                        ),
                   ],
                 )),
           ],
